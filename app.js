@@ -31,11 +31,58 @@
  const formGuessEl = document.querySelector('#formGuess');
  const inputGuessEl = document.querySelector('#inputGuess');
  const turnoutEl = document.querySelector('#turnout');
+ const knappis = formGuessEl.querySelector('.knappis');
  
- // Get a random number between 1-10
- const getRandomNumber = function(max = 10) {
-     return Math.ceil( Math.random() * max );
- }
- 
- let correctNumber;
- let guesses;
+ const getRandomNumber = function (max = 10) {
+
+    return Math.ceil(Math.random() * max);
+
+}
+
+let correctNumber = getRandomNumber();
+let guesses = 0;
+
+// Cheat
+cheatEl.innerText = correctNumber;
+
+formGuessEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    guesses++;
+
+    if (correctNumber == inputGuessEl.value) {
+        turnoutEl.innerHTML = `<p>U said ${inputGuessEl.value} and it's correct! 🥳</p>`;
+        knappis.disabled = true;
+    }
+
+    else if (correctNumber > inputGuessEl.value) {
+        turnoutEl.innerHTML = `<p>${inputGuessEl.value} is too LOW...</p>`;
+
+    } 
+    else if (correctNumber < inputGuessEl.value) {
+        turnoutEl.innerHTML = `<p>${inputGuessEl.value} is oo HIGH!</p>`;
+    }
+
+    turnoutEl.innerHTML += `<p>You've guessed ${guesses} times</p>`;
+    inputGuessEl.value = "";
+    inputGuessEl.focus();
+});
+
+// Listen for New Game
+formGuessEl.addEventListener('reset', () => {
+
+    // Get a new number to guess
+    correctNumber = getRandomNumber();
+
+    // Cheat
+    cheatEl.innerText = correctNumber;
+
+    // Reset number of guesses to 0
+    guesses = 0;
+
+    // Empty previous result
+    turnoutEl.innerHTML = "";
+
+    // Enable button again
+    knappis.disabled = false;
+});

@@ -22,3 +22,13 @@ body {
 #formGuess label {
 	margin-bottom: 0.25rem;
 }
+
+h1 {
+    margin:auto;
+    padding: 40px;
+    font-size: 4em;
+}
+
+#turnout {
+    font-size: 1em;
+}
